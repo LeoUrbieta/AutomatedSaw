@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['P3SIERRA.py'],
-             pathex=['/home/pi/Desktop/Sierra'],
+             pathex=['/home/pi/Documents/Control_Sierra'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False )
+          console=True )
