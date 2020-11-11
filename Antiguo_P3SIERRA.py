@@ -183,7 +183,7 @@ def BotonSierra():
    
 def OnClickPiezasYLongitud(campo_a_cambiar):
     
-    global valorpiezas, valorlongitud, valorvelocidadz, valordecampo, codigosvelocidad
+    global valorpiezas, valorlongitud, valorvelocidadz, valordecampo
     
     if campo_a_cambiar == "PIEZAS":
         if valordecampo != "":
@@ -203,24 +203,25 @@ def OnClickPiezasYLongitud(campo_a_cambiar):
         
             strlongitud.set(valordecampo)
             valorlongitud = valordecampo
+            
     elif campo_a_cambiar == "VELOCIDAD":
         if valordecampo != "":
             valor_entero = int(float(valordecampo))
-            if valor_entero in codigos_velocidad:
+            if valor_entero > 2000 or valor_entero < 250:
+                messagebox.showerror("Error","El valor debe estar entre 250 y 2000")
+            else:
                 strvelocidadz.set(valor_entero)
                 strcampo.set(valor_entero)
                 valorvelocidadz = str(valor_entero)
                 campo_a_enviar = "7:" + valorvelocidadz + ":1:"
                 ser.write(campo_a_enviar.encode())
                 #print(campo_a_enviar)
-            else:
-                messagebox.showerror("Error","Ese codigo de velocidad no existe")
    
 def BotonesCantidadCortes():
     
     global bot_num_piezas, bot_long_cortes, bot_vel_z
     
-    bot_vel_z = Button(win, text = "CODV (V)", font = myFont, command = OnClickPiezasYLongitud("VELOCIDAD"), height =1, width = 7)
+    bot_vel_z = Button(win, text = "VELZ (V)", font = myFont, command = OnClickPiezasYLongitud("VELOCIDAD"), height =1, width = 7)
     bot_vel_z.grid(row = 2, column=6)
     bot_num_piezas = Button(win, text = "PZS (N)", font = myFont, state = DISABLED, command = OnClickPiezasYLongitud("PIEZAS"), height =1, width = 7)
     bot_num_piezas.grid(row = 3, column=6)
@@ -292,7 +293,7 @@ def ChecarSerial():
             ser.close()
             strpiezas.set("")
             strlongitud.set("")
-            strvelocidadz.set("0")
+            strvelocidadz.set("250")
             valorpiezas = ""
             valorlongitud = ""
     win.after(1000,ChecarSerial)
@@ -343,11 +344,10 @@ strvelocidadz = StringVar()
 valordecampo = ""
 valorpiezas = ""
 valorlongitud = ""
-valorvelocidadz = "0"
+valorvelocidadz = "250"
 valordireccionprensa = "1"
 valordirecciondisipadores = "0"
 valor_manual_o_auto = "4"
-codigos_velocidad = [1,2,3,4,5,6,7,8,9,10,11,12]
 strvelocidadz.set(valorvelocidadz)
 
 bot_num_piezas = ""
